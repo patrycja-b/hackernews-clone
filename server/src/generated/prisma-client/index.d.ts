@@ -180,6 +180,8 @@ export type LinkOrderByInput =
   | "id_DESC"
   | "description_ASC"
   | "description_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
   | "url_ASC"
   | "url_DESC";
 
@@ -230,6 +232,14 @@ export interface LinkWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   url?: Maybe<String>;
   url_not?: Maybe<String>;
   url_in?: Maybe<String[] | String>;
@@ -638,6 +648,14 @@ export interface LinkScalarWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   url?: Maybe<String>;
   url_not?: Maybe<String>;
   url_in?: Maybe<String[] | String>;
@@ -757,12 +775,14 @@ export interface NodeNode {
 export interface Link {
   id: ID_Output;
   description: String;
+  createdAt: DateTimeOutput;
   url: String;
 }
 
 export interface LinkPromise extends Promise<Link>, Fragmentable {
   id: () => Promise<ID_Output>;
   description: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
   url: () => Promise<String>;
   postedBy: <T = UserPromise>() => T;
   votes: <T = FragmentableArray<Vote>>(args?: {
@@ -781,6 +801,7 @@ export interface LinkSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   description: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   url: () => Promise<AsyncIterator<String>>;
   postedBy: <T = UserSubscription>() => T;
   votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
@@ -799,6 +820,7 @@ export interface LinkNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   description: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
   url: () => Promise<String>;
   postedBy: <T = UserPromise>() => T;
   votes: <T = FragmentableArray<Vote>>(args?: {
@@ -1153,6 +1175,7 @@ export interface LinkSubscriptionPayloadSubscription
 export interface LinkPreviousValues {
   id: ID_Output;
   description: String;
+  createdAt: DateTimeOutput;
   url: String;
 }
 
@@ -1161,6 +1184,7 @@ export interface LinkPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   description: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
   url: () => Promise<String>;
 }
 
@@ -1169,6 +1193,7 @@ export interface LinkPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   description: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   url: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1273,6 +1298,16 @@ export type ID_Output = string;
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
