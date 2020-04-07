@@ -10,12 +10,12 @@ import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
-// 2
+// connect to API
 const httpLink = createHttpLink({
   uri: "http://localhost:4000",
 });
 
-// 3
+// new instance of Apollo Client
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
