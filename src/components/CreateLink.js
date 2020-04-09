@@ -3,20 +3,31 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { FEED_QUERY } from "./LinkList";
+import { LINKS_PER_PAGE } from "../constants";
 
 const CreateLink = () => {
+  let history = useHistory();
   const [link, setLink] = useState({ url: "", description: "" });
   const [addLink] = useMutation(POST_MUTATION, {
     update(store, { data: { post } }) {
-      const data = store.readQuery({ query: FEED_QUERY });
+      const first = LINKS_PER_PAGE;
+      const skip = 0;
+      const orderBy = "createdAt_DESC";
+      const data = store.readQuery({
+        query: FEED_QUERY,
+        variables: { first, skip, orderBy },
+      });
       data.feed.links.unshift(post);
       store.writeQuery({
         query: FEED_QUERY,
         data,
+        variables: { first, skip, orderBy },
       });
     },
+    onCompleted() {
+      history.push("/new/1");
+    },
   });
-  let history = useHistory();
 
   return (
     <div>

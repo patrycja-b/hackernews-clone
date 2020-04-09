@@ -13,7 +13,9 @@ const Link = ({ link, index, updateCacheAfterVote }) => {
   });
 
   const voteForLink = () => {
-    addVote({ variables: { linkId: link.id } });
+    addVote({ variables: { linkId: link.id } }).catch((err) =>
+      console.log(err)
+    );
   };
 
   return (
@@ -31,7 +33,7 @@ const Link = ({ link, index, updateCacheAfterVote }) => {
           {link.description} ({link.url})
         </div>
         <div className="f6 lh-copy gray">
-          {link.votes.length} votes | by{" "}
+          {link.votes ? link.votes.length : []} votes | by{" "}
           {link.postedBy ? link.postedBy.name : "Unknown "}
           {timeDifferenceForDate(link.createdAt)}
         </div>
